@@ -1,0 +1,123 @@
+
+      <%    @fjob=Fjob.find(current_user.id)%>
+      <%  @friend=Friendship.all%>
+      <%  @count=0 #요청온 파트너 counter%>
+  	   
+          <div class="panel panel-default">
+            <div class="panel-heading">Rating <i class="fa fa-link fa-1x"></i></div>
+           <% @myreview=Review.find(current_user.id)%>
+            <%if @myreview.total_rater_num!=0%>
+            <div class="panel-body"><%=@myreview.ratings/@myreview.total_rater_num%>점</div>
+            <%else%>
+            <div class="panel-body">없음</div>
+            <%end%>
+          </div>
+      
+        
+                <% @friend.each do |x|%>
+                     <% if x.friend_id == current_user.id%>
+                       <%if x.pending ==false%>
+                          <%_user=User.find(x.friend_id)%>
+                          <%@count+=1%> <!--@count는 친구요청온 사람들 세는 변수-->
+                         <%end%>
+                     <%end%>
+                <%end%>
+                <%if @count==0%> 
+                    <li><a data-toggle="tab" href="#friends">Partner</a></li>
+                <%else%>
+                    <li><a data-toggle="tab" href="#friends">Partner +<%=@count%></a></li>
+                <%end%>
+              </ul>
+
+         
+  
+        
+  
+                <label for="password"><h4><strong>Partner Request</strong></h4></label><br>
+                
+               <% @friend.each do |x|%>
+                     <% if x.friend_id == current_user.id%>
+                       <%if x.pending ==false%>
+                          <%_user=User.find(x.friend_id)%>
+                         <a href="/profile/<%=_user.id%>"><%=_user.name%></a>
+                        <button onclick="<%x.pending =1 %>">accept</button>
+                        <%x.save%>
+                      <%end%>
+                    <%end%>
+              <%end%>
+               </div>
+                <label for="password"><h4><strong>My Partners</strong></h4></label><br>
+                      <div class="form-group">
+                        <% @friend.each do |x|%>
+                            <%if x.pending ==true%>
+                             <% if x.friend_id == current_user.id%> <!--내가 요청 받아서 친구된 케이스-->
+                                    <%@f_fjob=Fjob.find(x.user_id)%>
+                                    <%@f_user=User.find(x.user_id)%>
+                                    <%@edit_review=Review.find(x.user_id)%>
+                                <div class="col-xs-6">
+                                    <label for="password"><h4>Profile Image</h4></label><br>
+                                    <img height="100%" width="100%" src="<%= @f_user.profile_img%>"> <br>
+                                 </div>
+                              <div class="col-xs-6">
+                                  <label for="first_name"><h4>Name</h4></label><br>
+                                  <a href="/fjob/profile/<%=@f_user.id%>"><%= @f_user.name%></a>
+                                </div>
+                          </div>
+                      <div class="form-group">
+                            <div class="col-xs-6">
+                            <label for="last_name"><h4>Category</h4></label><br>
+                              <%= @f_fjob.category%> 
+                              <%if @f_user.nil?%>
+                              <%else%>
+                              <br>
+                            <label for="last_name"><h4>Review</h4></label><br>
+                            <form action="/review/update/<%=@f_user.id%>" method "get" >
+                                Ratings:
+                                <div class="ui star rating" data-rating="3" id="wansik"></div>
+                                <input type="integer" name="n_ratings" value="<%=@edit_review.ratings%>"> <br>
+                                <input type="hidden" name="n_rater_id" value="<%=current_user.id%>">
+                                <input type="hidden" name="n_subject_id" value ="<%=@f_user.id%>">
+                                Review_text:
+                                <input type="text" name="n_rtext" value="<%=@edit_review.review_text%>"> <br>
+                                <button type="submit" class="btn btn-primary">제출</button>
+                            </form>
+                            <%end%>
+                             <%elsif x.user_id == current_user.id%> <!--내가 먼저 요청해서 친구된 케이스-->
+                                <%@f_fjob=Fjob.find(x.friend_id)%>  
+                                <%@f_user=User.find(x.friend_id)%>
+                                <%@edit_review=Review.find(x.friend_id)%>
+                                 <label for="password"><h4>Profile Image</h4></label><br>
+                                    <img height="100%" width="100%" src="<%= @f_user.profile_img%>"> <br>
+                              <div class="col-xs-6">
+                                  <label for="first_name"><h4>Name</h4></label><br>
+                                  <a href="/fjob/profile/<%=@f_user.id%>"><%= @f_user.name%></a>
+                                </div>
+                          </div>
+                      <div class="form-group">
+                            <div class="col-xs-6">
+                            <label for="last_name"><h4>Category</h4></label><br>
+                              <%= @f_fjob.category%> 
+                              <br>
+                             
+                              <label for="last_name"><h4>Review</h4></label><br>
+                            <form action="/review/update/<%=@f_user.id%>" method "get" >
+                                Ratings:
+                                 <div class="ui star rating" data-rating="3" id="wansik"></div>
+                                <input type="integer" name="n_ratings" value="<%=@edit_review.ratings%>" >
+                                 <br>
+                                <input type="hidden" name="n_rater_id" value="<%=current_user.id%>">
+                                <input type="hidden" name="n_subject_id" value ="<%=@f_user.id%>">
+                                Review_text:
+                                <input type="text" name="n_rtext" value="<%=@edit_review.review_text%>"> <br>
+                               <button class="btn btn-info" type="submit" id="submit1"><span class="glyphicon glyphicon-edit"></span> 제출</button>
+                               
+                              <button class="btn btn-success" id="save5"><span class="glyphicon glyphicon-save"></span> save</button>
+                            </form>
+                                <%else%>
+                              <%end%>
+                            <%end%>
+                          <%end%>
+                          </div>
+                      </div>
+                     </div>
+        

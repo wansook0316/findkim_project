@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+      <title>FIND KIM</title>
+      
+      <meta charset="utf-8">
+      
+      <%= stylesheet_link_tag "app\assets\stylesheets\index.css" %>
+      
+      
+    
+
+
+    </head>
+
+    <body>
+      
+        <div class="fullpage">
+          
+          <nav>
+            <ul>
+              <li>
+                <button href="#catagory" name="catagory" type="button"></button>
+              </li>
+              <li>
+                <a href="home"><h1><인덱스입니다>FIND KIM</h1></a>
+              </li>
+              <li>
+                <a href="/fjob/find_data"><h1>검색</h1></a>
+              </li>
+              <% if current_user.nil? == true %>
+                  <li><a href ="/users/sign_in" >로그인</a></li>
+                  <a href ="/users/sign_up"> 회원가입</a>
+              <%elsif current_user.nil? == false %>
+                     <li><a href ="/fjob/new">구인/구직 파일 만들기</a></li>
+                     <li><a href="/fjob/show/<%=current_user.id%>">My Profile & 구인/구직 파일</a></li>
+                
+                 <li><a data-method="DELETE" href ="/users/sign_out" >로그아웃</a></li>
+              <%end %>
+            </ul>
+          </nav>
+
+	
+	<div id="fullpage" class="fullpage-wrapper" style="height: 100%; position: relative; touch-action: none; transform: translate3d(0px, 0px, 0px); transition: all 700ms ease;">
+	
+	<div class="section fp-section fp-table active fp-completely" id="section0" data-fp-styles="null" style="height: 1047px; background-color: rgb(27, 188, 155);">
+	    <div class="fp-tableCell" style="height: 1047px;">
+		    <div class=title_main>Find Kim</div>
+		    <div class=subtitle_main>Staff for one-man creator<div>
+	    	<a href = "">SEARCH</a>
+	    </div>
+	</div>
+	
+	<div class="section fp-section fp-table" id="section1" data-fp-styles="null" style="height: 1047px; background-color: rgb(75, 191, 195);">
+	    <div class="fp-tableCell" style="height: 1047px;">
+		    <div class="category">
+			    <h1>More Simple yet</h1>
+			    <p>Sections won't contain anchor links. It's more simple to configure but a bit more restrictive.</p>
+		    </div>
+	    </div>
+	</div>
+	<div class="section fp-section fp-table" id="section2" data-fp-styles="null" style="height: 1047px; background-color: rgb(123, 170, 190);">
+	    <div class="fp-tableCell" style="height: 1047px;">
+			<div class="intro">
+				<h1>URL without /#</h1>
+				<p>But back button won't work!</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<p>
+  <%= form_tag search_posts_path, :method => :get do %>
+<%= text_field_tag :query, params[:query] %> <%= submit_tag "Search!" %>
+<% end %>
+
+</p>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript" src="fullpage.js"></script>
+	
+	<script type="text/javascript">
+    var myFullpage = new fullpage('#fullpage', {
+        sectionsColor: ['#1bbc9b', '#4BBFC3', '#7BAABE']
+    });
+</script>
+          
+    </body>
+    
+
+
+</html>
+        

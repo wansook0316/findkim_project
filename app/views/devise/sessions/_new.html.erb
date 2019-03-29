@@ -1,0 +1,47 @@
+<div class="ui basic padded segment">
+<div class="ui center aligned huge header">로그인</div>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => 'ui small form'}) do |f| %>
+  <div class="field">
+    <div class="ui fluid left icon input">
+      <i class="envelope icon"></i>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "E-mail address" %>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="ui fluid left icon input">
+      <i class="key icon"></i>
+      <%= f.password_field :password, autocomplete: "off", placeholder: "Password"%>
+    </div>
+  </div>
+  
+  <div class="field">
+      <%= f.submit '로그인', :class => "ui fluid button" %>
+  </div>
+  
+  <div class="field">
+    <div id="signup_popup" class="ui fluid button">회원가입</div>
+  </div>
+
+  <% if devise_mapping.rememberable? -%>
+    <div class="field">
+      <div class="ui toggle checkbox">
+        <%= f.check_box :remember_me %>
+        <label>비밀번호 저장</label>
+      </div>
+    </div>
+  
+    
+  <% end -%>
+
+<% end %>
+</div>
+
+<%if false%>
+<%= render "devise/shared/links" %>
+<%end%>
+
+
+  
+
+

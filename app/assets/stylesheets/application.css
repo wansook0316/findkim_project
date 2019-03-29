@@ -1,0 +1,350 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+	
+	
+		/* Reset CSS
+		 * --------------------------------------- */
+/*		body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,*/
+/*		form,fieldset,input,textarea,p,blockquote,th,td {*/
+/*		    padding: 0;*/
+/*		    margin: 0;*/
+/*		}*/
+/*		a{*/
+/*			text-decoration:none;*/
+/*		}*/
+/*		table {*/
+/*		    border-spacing: 0;*/
+/*		}*/
+/*		fieldset,img {*/
+/*		    border: 0;*/
+/*		}*/
+/*		address,caption,cite,code,dfn,em,strong,th,var {*/
+/*		    font-weight: normal;*/
+/*		    font-style: normal;*/
+/*		}*/
+/*		strong{*/
+/*			font-weight: bold;*/
+/*		}*/
+/*		ol,ul {*/
+/*		    list-style: none;*/
+/*		    margin:0;*/
+/*		    padding:0;*/
+/*		}*/
+/*		caption,th {*/
+/*		    text-align: left;*/
+
+/*		}*/
+/*		h1,h2,h3,h4,h5,h6 {*/
+/*		    font-weight: normal;*/
+/*		    font-size: 100%;*/
+/*		    margin:0;*/
+/*		    padding:0;*/
+/*		    color:#444;*/
+/*		}*/
+/*		q:before,q:after {*/
+/*		    content:'';*/
+/*		}*/
+/*		abbr,acronym { border: 0;*/
+/*		}*/
+
+		/* Custom CSS
+		 * --------------------------------------- */
+/*		body{*/
+/*			font-family: arial,helvetica;*/
+/*			color: #F2F2F2;*/
+/*		}*/
+/*		h1{*/
+/*			font-size: 6em;*/
+/*		}*/
+/*		p{*/
+/*			font-size: 2em;*/
+/*		}*/
+/*		.content{*/
+/*			position: relative;*/
+/*			top: 50%;*/
+/*			transform: translateY(-50%);*/
+/*			text-align: center;*/
+/*		}*/
+
+		/* menu media query
+		 * --------------------------------------- */
+/*		@media screen and (min-width: 1301px) and (max-width: 2100px) {*/
+/*			#fp-nav a {*/
+/*				font-size: 15px;*/
+/*			}*/
+/*		}*/
+/*		@media screen and (min-width: 501px) and (max-width: 1300px) {*/
+/*			#fp-nav a {*/
+/*				font-size: 10px;*/
+/*			}*/
+/*		}*/
+/*		@media screen and (min-width: 200px) and (max-width: 500px) {*/
+/*			#fp-nav a {*/
+/*				font-size: 5px;*/
+/*			}*/
+/*						#fp-nav span {*/
+/*				padding: 3px;*/
+/*			}*/
+/*		}*/
+		
+		
+		/* Section 0
+		 * --------------------------------------- */
+/*		#section0{*/
+/*			background-color: #BFDA00;*/
+/*		}*/
+/*		#section0 h1{*/
+/*			color: #444;*/
+/*		}*/
+/*		#section0 p{*/
+/*			color: #333;*/
+/*			opacity: 0.4;*/
+/*		}*/
+		
+		/* section0 media query */
+/*		@media screen and (min-width: 1301px) and (max-width: 2100px) {*/
+/*			.title0 h1 {*/
+/*				font-size: 100px;*/
+/*				font-weight: 600;*/
+/*			}*/
+/*			.detail_search a{*/
+/*				font-size: 30px;*/
+/*			}*/
+/*			.detail_search span {*/
+/*				padding: 0 8px;*/
+/*			}*/
+/*			.textarea {*/
+/*				padding: 5px;*/
+/*				width: 80%;*/
+/*				border: solid 5px #fff;*/
+/*				height: 75px;*/
+/*				font-size: 30px;*/
+/*			}*/
+/*			.findbutton {*/
+/*				width: 18%;*/
+/*				border: solid 5px #fff;*/
+/*				height: 75px;*/
+/*				font-size: 30px;*/
+/*			}*/
+/*		}*/
+/*		@media screen and (min-width: 951px) and (max-width: 1300px) {*/
+/*			.title0 h1 {*/
+/*				font-size: 62px;*/
+/*				font-weight: 600;*/
+/*			}*/
+/*			.detail_search a{*/
+/*				font-size: 19px;*/
+/*			}*/
+/*			.detail_search span {*/
+/*				padding: 0 5px;*/
+/*			}*/
+/*			.textarea {*/
+/*				padding: 5px;*/
+/*				width: 80%;*/
+/*				border: solid 4px #fff;*/
+/*				height: 60px;*/
+/*				font-size: 27px;*/
+/*			}*/
+/*			.findbutton {*/
+/*				width: 18%;*/
+/*				border: solid 4px #fff;*/
+/*				height: 60px;*/
+/*				font-size: 27px;*/
+/*			}*/
+/*		}*/
+/*		@media screen and (min-width: 671px) and (max-width: 950px) {*/
+/*			.title0 h1 {*/
+/*				font-size: 50px;*/
+/*				font-weight: 600;*/
+/*			}*/
+/*			.detail_search a{*/
+/*				font-size: 12px;*/
+/*			}*/
+/*			.detail_search span {*/
+/*				padding: 0 4px;*/
+/*			}*/
+/*			.textarea {*/
+/*				padding: 5px;*/
+/*				width: 80%;*/
+/*				border: solid 3.5px #fff;*/
+/*				height: 45px;*/
+/*				font-size: 17px;*/
+/*			}*/
+/*			.findbutton {*/
+/*				width: 18%;*/
+/*				border: solid 3.5px #fff;*/
+/*				height: 45px;*/
+/*				font-size: 17px;*/
+/*			}*/
+/*		}*/
+/*		@media screen and (min-width: 550px) and (max-width: 670px) {*/
+/*			.title0 h1 {*/
+/*				font-size: 40px;*/
+/*				font-weight: 600;*/
+/*			}*/
+/*			.detail_search a{*/
+/*				font-size: 7.5px;*/
+/*			}*/
+/*			.detail_search span {*/
+/*				padding: 0 2px;*/
+/*			}*/
+/*			.textarea {*/
+/*				padding: 5px;*/
+/*				width: 75%;*/
+/*				border: solid 2.5px #fff;*/
+/*				height: 27px;*/
+/*				font-size: 10px;*/
+/*			}*/
+/*			.findbutton {*/
+/*				width: 20%;*/
+/*				border: solid 2.5px #fff;*/
+/*				height: 27px;*/
+/*				font-size: 10px;*/
+/*			}*/
+/*		}*/
+/*		@media screen and (min-width: 200px) and (max-width: 550px) {*/
+/*			.title0 h1 {*/
+/*				font-size: 30px;*/
+/*				font-weight: 600;*/
+/*			}*/
+/*			.detail_search a{*/
+/*				font-size: 7.5px;*/
+/*			}*/
+/*			.detail_search span {*/
+/*				padding: 0 2px;*/
+/*			}*/
+/*			.textarea {*/
+/*				padding: 5px;*/
+/*				width: 75%;*/
+/*				border: solid 2.5px #fff;*/
+/*				height: 27px;*/
+/*				font-size: 10px;*/
+/*			}*/
+/*			.findbutton {*/
+/*				width: 20%;*/
+/*				border: solid 2.5px #fff;*/
+/*				height: 27px;*/
+/*				font-size: 10px;*/
+/*			}*/
+/*		}*/
+
+
+		/* Section 1
+		 * --------------------------------------- */
+/*		#section1{*/
+/*			background-color: #2EBE21;*/
+/*		}*/
+/*		#section1 h1{*/
+/*			color: #fff;*/
+/*		}*/
+/*		#section1 p{*/
+/*			opacity: 0.8;*/
+/*		}*/
+
+
+		/* Section 2
+		 * --------------------------------------- */
+/*		#section2{*/
+/*			background-color: #2C3E50;*/
+/*		}*/
+/*		#section2 h1{*/
+/*			color: #F2F2F2;*/
+/*		}*/
+/*		#section2 p{*/
+/*			opacity: 0.6;*/
+/*		}*/
+		
+	
+
+		/* title
+         * --------------------------------------- */
+/*        .section-title{*/
+            
+/*            box-sizing: border-box;*/
+/*            height: 10vh;*/
+/*            min-width: 24%;*/
+/*            max-width: 100%;*/
+/*            vertical-align: middle;*/
+/*            margin: 0;*/
+            
+            
+/*        }*/
+        
+/*        .title-name h1{*/
+            
+/*            padding-top: ;*/
+/*            vertical-align: middle;*/
+/*            padding-top: 2.5vh;*/
+                
+/*        }*/
+        
+/*        @media screen and (max-width: 3000px) {*/
+            
+            
+/*			     .title-name h1{*/
+/*				font-size: 2.5em;*/
+/*                padding-top: 2vh;*/
+/*			     }*/
+
+                
+/*		}*/
+        
+/*        @media screen and (max-width: 1700px) {*/
+
+/*			.title-name h1{*/
+/*				font-size: 2.5em;*/
+/*                padding-top: 1.5vh;*/
+/*			}*/
+
+/*		}*/
+
+/*		@media screen and (max-width: 1280px) {*/
+
+/*			.title-name h1{*/
+/*				font-size: 3em;*/
+                
+/*			}*/
+
+/*		}*/
+
+/*       @media screen and (max-width: 1000px) {*/
+
+/*			.title-name h1{*/
+/*				font-size: 3em;*/
+               
+/*			}*/
+
+/*		}*/
+
+/*        @media screen and (max-width: 700px) {*/
+
+/*			.title-name h1{*/
+/*				font-size: 2.5em;*/
+               
+/*			}*/
+
+/*		}*/
+        
+/*		@media screen and (max-width: 450px) {*/
+
+/*			.title-name h1{*/
+/*				font-size: 2em;*/
+/*                padding-top: 4vh;*/
+/*			}*/
+
+/*		}*/
+/**/

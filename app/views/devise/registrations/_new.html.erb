@@ -1,0 +1,67 @@
+<div class="ui basic padded segment">
+<div class="ui center aligned huge header">회원가입</div>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => 'ui small form'}) do |f| %>
+  <%= devise_error_messages! %>
+ 
+  <div class="field">
+    <div class="ui fluid left icon input">
+      <i class="envelope icon"></i>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "E-mail address" %>
+    </div>
+  </div>
+  
+  <div class="field">
+        <div class="ui fluid left icon input">
+      <i class="user icon"></i>
+    
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "Name" %>
+    </div>
+  </div>
+  
+  <div class="field">
+    <div class="ui fluid left icon input">
+      <i class="user icon"></i>
+    <%= f.text_field :nickname, autofocus: true, autocomplete: "nickname", placeholder: "Nick Name" %>
+    </div>
+  </div>
+  
+  <div class="field">
+            <div class="ui fluid left icon input">
+      <i class="key icon"></i>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off", placeholder: "Password" %>
+    </div>
+  </div>
+
+  <div class="field">
+            <div class="ui fluid left icon input">
+      <i class="key icon"></i>
+    <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Password Confirmation" %>
+  </div>
+  </div>
+
+ <div class="field">
+            <div class="ui fluid left icon input">
+      <i class="mobile alternate icon"></i>
+    <%= f.number_field :tel, autofocus: true, autocomplete: "tel", placeholder: "Phone Number" %>
+    </div>
+  </div>
+
+  <div class="field">
+            <div class="ui fluid left icon input">
+      <i class="smile icon"></i>
+    <%= f.text_field :profile_img, autofocus: true, autocomplete: "profile_img", placeholder: "Profile Image" %>
+    </div>
+  </div>
+
+  <div class="field">
+      <%= f.submit '회원가입', :class => "ui fluid button" %>
+  </div>
+<% end %>
+</div>
+
+<%if false%>
+<%= render "devise/shared/links" %>
+<%end%>

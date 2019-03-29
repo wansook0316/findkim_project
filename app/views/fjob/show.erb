@@ -1,0 +1,514 @@
+show html
+
+<!--아래껀 전체 적인 틀 부트스트랩-->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<!--아래꺼 잘모르겠음 바뀌는거 없음-->
+<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+
+<!--아래꺼 잘모르겟음 바뀌는거 없음-->
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!------ Include the above in your HEAD tag ---------->
+
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
+  <!--아래껀 탭 때문에 쓰는 부트스트랩-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  
+</head>
+
+<body>
+    
+    
+    
+    
+    
+    
+<hr>
+<div class="container bootstrap snippet">
+    <div class="row">
+      <%    @fjob=Fjob.find(current_user.id)%>
+      <%  @friend=Friendship.all%>
+      <%  @count=0 #요청온 파트너 counter%>
+  	   <div class="col-sm-3"><!--left col-->
+      <div class="text-center">
+          <%if current_user.profile_img==""%>
+             <img src="https://img.clipartxtras.com/944b9ac21df9449ab73aa8a0ed2508dd_profile-clip-art-library-profile-clipart-images_1655-1655.png" height="100" width="100">
+          <%else%>
+            <img src="<%= current_user.profile_img %>" class="avatar img-circle img-thumbnail" alt="avatar">
+        <%end%>
+        <h6>Profile Image</h6>
+      </div></hr><br>
+          <div class="panel panel-default">
+            <div class="panel-heading">Rating <i class="fa fa-link fa-1x"></i></div>
+           <% @myreview=Review.all%>
+           <%sum=0%>
+		    <%num_count=0%>
+				<%@myreview.each do |x|%>
+					<%if x.subject_id==current_user.id%>
+							<%sum+=x.ratings%>
+							<%num_count+=1%>
+						<%end%>
+				<%end%>
+					<%if num_count!=0%>
+						<div class="panel-body"><%=sum/num_count%>점</div>
+				    <%else%>
+					    <div class="panel-body">None </div>
+					<%end%>
+					
+					Review from Partners: <br>
+		            <%@myreview.each do |x|%>
+		                <%if x.subject_id==current_user.id%>
+		                    <%=User.find(x.rater_id).nickname%>
+		                    <%if x.review_text==""%>
+		                        <%if x.ratings==5%>
+		                        일하기 너무 좋았어요
+		                        <%elsif x.ratings==4%>
+		                        일하기 좋았어요
+		                        <%elsif x.ratings==3%>
+		                        일하기 보통이었어요
+		                        <%elsif x.ratings==2%>
+		                        일하기 별로였어요
+		                        <%elsif x.ratings==1%>
+		                        일하기 진짜 별로였어요
+		                        <%elsif x.ratings==0%>
+		                        일하기 최악이었어요
+		                        <%else%>
+		                        <%end%>
+		                    <%else%>
+		                    <%=x.review_text%>
+		                    <%end%>
+		                <%end%>
+		            <%end%>
+          </div>
+          
+          
+          <ul class="list-group">
+            <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
+          </ul> 
+               
+          <div class="panel panel-default">
+            <div class="panel-heading">Social Media</div>
+            <div class="panel-body">
+            	<i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
+            </div>
+          </div>
+          
+        </div><!--/col-3-->
+    	<div class="col-sm-9">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#home">Profile</a></li>
+                <li><a data-toggle="tab" href="#messages">Career</a></li>
+                <% @friend.each do |x|%>
+                     <% if x.friend_id == current_user.id%>
+                       <%if x.pending ==false%>
+                          <%_user=User.find(x.friend_id)%>
+                          <%@count+=1%> <!--@count는 친구요청온 사람들 세는 변수-->
+                         <%end%>
+                     <%end%>
+                <%end%>
+                <%if @count==0%> 
+                    <li><a data-toggle="tab" href="#friends">Partner</a></li>
+                <%else%>
+                    <li><a data-toggle="tab" href="#friends">Partner +<%=@count%></a></li>
+                <%end%>
+              </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane active" id="home">
+                <hr>
+            
+           
+            
+
+  <table class="table">
+    <tbody>
+      <tr>
+       <div id="userupdate">
+         <form action="/fjob/user_update/<%=@fjob.id%>" method "get" >
+             이름:
+        <input type="text" name="u_name" value = "<%=current_user.name%>"><br>
+        닉네임:
+        <input type="text" name="u_nickname" value = "<%=current_user.nickname%>"><br>
+        전화번호:
+        <input type="integer" name="u_tel" value = "<%=current_user.tel%>"><br>
+        <button type="submit" class="btn btn-primary" >제출</button>
+        </form>
+      </div>
+       <div id="userupdatedd">
+            <%= current_user.name %></br>
+            <%= current_user.nickname %></br>
+            <%= current_user.email %></br>
+            <%= current_user.tel %></br>
+            <button type="submit" id="useredit" class="btn btn-primary" >수정하기</button>
+              <%= link_to "비밀번호 수정하기", :user_edit %>
+       </div>
+      </tr>
+    </tbody>
+
+  </table>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+ <script src="//code.jquery.com/jquery.js"></script>
+<!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.js"></script>-->
+ 
+              
+              <hr>
+              
+             </div><!--/tab-pane-->
+             <div class="tab-pane" id="messages">
+               
+               <h2></h2>
+               <div class="tab-pane" id="blah">
+               <hr>
+                  <form class="form" action="##" method="post" id="registrationForm">
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                              <label for="first_name"><h4>Category</h4></label><br>
+                              <%= @fjob.category%>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                            <label for="last_name"><h4>Contract</h4></label><br>
+                              <%= @fjob.contract%> month
+                          </div>
+                      </div>
+          
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="phone"><h4>Date</h4></label><br>
+                              <%= @fjob.date%>
+                          </div>
+                      </div>
+          
+                      <div class="form-group">
+                          <div class="col-xs-6">
+                             <label for="mobile"><h4>Time</h4></label><br>
+                              <%= @fjob.starttime%> ~ <%=@fjob.endtime%>  == Total <%=@fjob.timetotal%> hours
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="email"><h4>Environment</h4></label><br>
+                              <% if @fjob.home_environment.include? "outsidework" %>
+                                <%=@fjob.home_environment%><%=@fjob.location%>
+                              <%else%>
+                                <%=@fjob.home_environment%>
+                               <%end%>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="email"><h4>Career</h4></label><br>
+                             <%= @fjob.career%>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          
+                          <div class="col-xs-6">
+                              <label for="password"><h4>Portfolio Image</h4></label><br>
+                              <%if @fjob.portfolio_img==""%>
+                              No Image <br>
+                              <%else%>
+                              <img height="100%" width="100%" src="<%= @fjob.portfolio_img%>"> <br>
+                              <%end%>
+                          
+                      </div>
+                     
+                      <div class="form-group">
+                           <div class="col-xs-12">
+                               
+                            </div>
+                            </div>
+                      
+              	</form>
+              	</div>
+              	 <button class="btn btn-info" id="edit5" ><span class="glyphicon glyphicon-edit"></span> edit</button>
+              	 </div>
+    <div class="form_update" id="form_update_fjob" >         	
+              	<form action="/fjob/update/<%=@fjob.id%>" method "get" >
+        
+    <!--포트폴리오 사진 url -->
+      portfolio_img url:<br>
+    <input type="text" name="fjob_portfolio_img" value = "<%=@fjob.portfolio_img%>"><br>
+    
+     <!--직군-->
+    category:<br>
+    <% if @fjob.category.include? "creator" %>
+        <input type="checkbox" name="fjob_category[]" value ="creator" checked> Creator
+    <%else%>
+        <input type="checkbox" name="fjob_category[]" value ="creator" > Creator
+    <%end%>
+    <% if @fjob.category.include? "editor" %>
+        <input type="checkbox" name="fjob_category[]" value ="editor" checked> Editor
+    <%else%>
+        <input type="checkbox" name="fjob_category[]" value ="editor"> Editor
+    <%end%>
+    <% if @fjob.category.include? "designer" %>
+        <input type="checkbox" name="fjob_category[]" value ="designer" checked> designer
+    <%else%>
+        <input type="checkbox" name="fjob_category[]" value ="designer"> designer
+    <%end%>
+    <% if @fjob.category.include? "photograhper" %>
+        <input type="checkbox" name="fjob_category[]" value ="photograhper" checked> photograhper
+    <%else%>
+        <input type="checkbox" name="fjob_category[]" value ="photograhper"> photograhper
+    <%end%>
+    <% if @fjob.category.include? "translator" %>
+        <input type="checkbox" name="fjob_category[]" value ="translator" checked> translator
+    <%else%>
+        <input type="checkbox" name="fjob_category[]" value ="translator"> translator
+    <%end%>
+    <% if @fjob.category.include? "marketer" %>
+        <input type="checkbox" name="fjob_category[]" value ="marketer" checked> marketer
+    <%else%>
+        <input type="checkbox" name="fjob_category[]" value ="marketer"> marketer
+    <%end%>
+    <% if @fjob.category.include? "writer" %>
+        <input type="checkbox" name="fjob_category[]" value ="writer"  checked> writer<br>
+    <%else%>
+        <input type="checkbox" name="fjob_category[]" value ="writer" > writer<br>
+    <%end%>
+    
+    <!--경력 -->
+    career: <br>
+    <input type="text" name = "fjob_career" value="<%=@fjob.career%>"><br>
+
+   
+   <!--계약기간 -->
+    contract: <br>
+     <input type="number" name ="fjob_contract"  value="<%=@fjob.contract%>">개월<br>
+    
+   
+    <!--근무 시간 -->
+    <!--요일-->
+    date: <br>
+    <% if @fjob.date.include? "monday" %>
+        <input type="checkbox" name="fjob_date[]" value ="monday"> 월요일
+    <%else%>
+        <input type="checkbox" name="fjob_date[]" value ="monday"> 월요일
+    <%end%>
+    <% if @fjob.date.include? "tuesday" %>
+    <input type="checkbox" name="fjob_date[]" value ="tuesday" checked> 화요일
+    <%else%>
+    <input type="checkbox" name="fjob_date[]" value ="tuesday"> 화요일
+    <%end%>
+    <% if @fjob.date.include? "wednesday" %>
+    <input type="checkbox" name="fjob_date[]" value ="wednesday" checked> 수요일
+    <%else%>
+    <input type="checkbox" name="fjob_date[]" value ="wednesday"> 수요일
+    <%end%>
+    <% if @fjob.date.include? "thursday" %>
+    <input type="checkbox" name="fjob_date[]" value ="thursday" checked> 목요일
+    <%else%>
+    <input type="checkbox" name="fjob_date[]" value ="thursday"> 목요일
+    <%end%>
+    <% if @fjob.date.include? "friday" %>
+    <input type="checkbox" name="fjob_date[]" value ="friday" checked> 금요일
+    <%else%>
+    <input type="checkbox" name="fjob_date[]" value ="friday"> 금요일
+    <%end%>
+    <% if @fjob.date.include? "saturday" %>
+    <input type="checkbox" name="fjob_date[]" value ="saturday" checked> 토요일
+    <%else%>
+    <input type="checkbox" name="fjob_date[]" value ="saturday"> 토요일
+    <%end%>
+    <% if @fjob.date.include? "sunday" %>
+    <input type="checkbox" name="fjob_date[]" value ="sunday" checked> 일요일
+    <%else%>
+    <input type="checkbox" name="fjob_date[]" value ="sunday"> 일요일
+    <%end%>
+    <br>
+     <!--시간-->
+    
+     time: <br>
+    start time:
+      <input type="number" name = "fjob_starttime" value="<%=@fjob.starttime%>" min="0" max="24">
+    end time:
+     <input type="number" name ="fjob_endtime" value="<%=@fjob.endtime%>" min="0" max="24">
+    <br>
+    total time:
+    <input type="number" name ="fjob_timetotal" value="<%=@fjob.timetotal%>" min="0" max="24"> 시간
+    
+    <br>
+     <!--근무환경-->
+      <!--재택근무여부-->
+      home_environment: <br>
+    <% if @fjob.home_environment.include? "homework" %>
+        <input type="checkbox" name="fjob_home_environment[]" value="homework" checked> 재택근무<br>
+    <%else%>
+        <input type="checkbox" name="fjob_home_environment[]" value="homework" > 재택근무<br>
+    <%end%>
+    <% if @fjob.home_environment.include? "outsidework" %>
+        <input type="checkbox" name="fjob_home_environment[]" value="outsidework"  checked>출근<br>
+    <%else%>
+        <input type="checkbox" name="fjob_home_environment[]" value="outsidework" >출근<br>
+    <%end%>
+    <input type="text" name="fjob_location" value= "<%=@fjob.location%>"><%=@fjob.location%> 지역 / OO시 OO군<br>
+  <button type="submit" class="btn btn-primary" >제출</button>
+</form>
+</div>
+             </div><!--/tab-pane-->
+        
+     <div class="tab-pane" id="friends">
+             </hr>
+             
+               <hr>
+                <div class="form-group">
+                <label for="password"><h4><strong>Partner Request</strong></h4></label><br>
+                
+               <% @friend.each do |x|%>
+                     <% if x.friend_id == current_user.id%>
+                       <%if x.pending == false%>
+                          <%_user=User.find(x.user_id)%>
+                         <a href="/profile/<%=_user.id%>"><%=_user.name%></a>
+                        <button onclick="<%x.pending =1 %>">accept</button>
+                        <%x.save%>
+                        <%end%>
+                        
+                        <form action="/friendship/decline" method "get" >
+                            <input type="hidden" name="decline_id" value="<%=x.id%>">
+                            <button type="submit" class="btn btn-primary">decline</button>
+                        </form>
+                      
+                    <%end%>
+              <%end%>
+               </div>
+                <label for="password"><h4><strong>My Partners</strong></h4></label><br>
+                      <div class="form-group">
+                        <% @friend.each do |x|%>
+                            <%if x.pending ==true%>
+                             <% if x.friend_id == current_user.id%> <!--내가 요청 받아서 친구된 케이스-->
+                                    <%@f_fjob=Fjob.find(x.user_id)%>
+                                    <%@f_user=User.find(x.user_id)%>
+                                    <%@edit_review=Review.find(x.user_id)%>
+                                <div class="col-xs-6">
+                                    <label for="password"><h4>Profile Image</h4></label><br>
+                                    <img height="100%" width="100%" src="<%= @f_user.profile_img%>"> <br>
+                                 </div>
+                              <div class="col-xs-6">
+                                  <label for="first_name"><h4>Name</h4></label><br>
+                                  <a href="/fjob/profile/<%=@f_user.id%>"><%= @f_user.name%></a>
+                                </div>
+                          </div>
+                      <div class="form-group">
+                            <div class="col-xs-6">
+                            <label for="last_name"><h4>Category</h4></label><br>
+                              <%= @f_fjob.category%> 
+                              <%if @f_user.nil?%>
+                              <%else%>
+                              <br>
+                            <label for="last_name"><h4>Review</h4></label><br>
+                            <form action="/review/update/<%=@f_user.id%>" method "get" >
+                                Ratings:
+                                <div class="ui star rating" data-rating="3" id="wansik"></div>
+                                <input type="integer" name="n_ratings" value="<%=@edit_review.ratings%>"> <br>
+                                <input type="hidden" name="n_rater_id" value="<%=current_user.id%>">
+                                <input type="hidden" name="n_subject_id" value ="<%=@f_user.id%>">
+                                Review_text:
+                                <input type="text" name="n_rtext" value="<%=@edit_review.review_text%>"> <br>
+                                <button type="submit" class="btn btn-primary">제출</button>
+                            </form>
+                            <%end%>
+                             <%elsif x.user_id == current_user.id%> <!--내가 먼저 요청해서 친구된 케이스-->
+                                <%@f_fjob=Fjob.find(x.friend_id)%>  
+                                <%@f_user=User.find(x.friend_id)%>
+                                <%@edit_review=Review.find(x.friend_id)%>
+                                 <label for="password"><h4>Profile Image</h4></label><br>
+                                    <img height="100%" width="100%" src="<%= @f_user.profile_img%>"> <br>
+                              <div class="col-xs-6">
+                                  <label for="first_name"><h4>Name</h4></label><br>
+                                  <a href="/fjob/profile/<%=@f_user.id%>"><%= @f_user.name%></a>
+                                </div>
+                          </div>
+                      <div class="form-group">
+                            <div class="col-xs-6">
+                            <label for="last_name"><h4>Category</h4></label><br>
+                              <%= @f_fjob.category%> 
+                              <br>
+                             
+                              <label for="last_name"><h4>Review</h4></label><br>
+                            <form action="/review/update/<%=@f_user.id%>" method "get" >
+                                Ratings:
+                                 <div class="ui star rating" data-rating="3" id="wansik"></div>
+                                <input type="integer" name="n_ratings" value="<%=@edit_review.ratings%>" >
+                                 <br>
+                                <input type="hidden" name="n_rater_id" value="<%=current_user.id%>">
+                                <input type="hidden" name="n_subject_id" value ="<%=@f_user.id%>">
+                                Review_text:
+                                <input type="text" name="n_rtext" value="<%=@edit_review.review_text%>"> <br>
+                               <button class="btn btn-info" type="submit" id="submit1"><span class="glyphicon glyphicon-edit"></span> 제출</button>
+                              <button class="btn btn-success" id="save5"><span class="glyphicon glyphicon-save"></span> save</button>
+                            </form>
+                                <%else%>
+                              <%end%>
+                            <%end%>
+                          <%end%>
+                          </div>
+                      </div>
+                     </div>
+             </div><!--/tab-pane-->
+              </div><!--/tab-pane-->
+          </div><!--/tab-content-->
+        </div><!--/col-9-->
+    </div><!--/row-->
+</body>
+
+
+<script>
+
+  
+     $("#form_update_fjob").hide();
+ 
+
+$("#wansik").ready(function(){
+    $('.ui.rating').rating('enable')
+
+})
+
+$("#form_update_fjob").hide();
+
+$("#edit5").click(function() {
+  $("#blah").hide();
+  $("#form_update_fjob").show();
+  
+  
+  $("te").each(function() {
+    var content = $(this).html();
+    });
+
+  $("#save4").show();
+  $(".info4").fadeIn("fast");
+});
+
+$("#submit1").click(function() {
+  $("#tab-pane").show();
+  $("#form_update_fjob").hide();
+  
+});
+
+
+$("#userupdate").hide();
+
+$("#useredit").click(function() {
+  $("#userupdatedd").hide();
+  $("#userupdate").show();
+  
+});
+
+</script>

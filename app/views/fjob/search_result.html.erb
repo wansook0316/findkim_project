@@ -1,0 +1,372 @@
+<div id="fp-nav" class="right">
+	<span data-menuanchor="firstPage" class="menu_object"><a href="/"><i class="home icon"></i></a></span>	
+				
+
+	<!--
+	<span data-menuanchor="4thpage" class="menu_object"><a href="#4thpage"><i class="wrench icon"></i></a></span>
+				
+	<span data-menuanchor="" class="menu_object" id="category_popup"><a><i class="paperclip icon"></i></a></span>
+	-->
+
+	
+	<span class="ui menu_object" ><a href = "javascript:;" id="search_button"><i class="search icon"></i></a></span>
+	
+	<% if current_user.nil? == true %>
+		<span data-menuanchor="" class="menu_object" id="login_popup">
+			<a><i class="lock icon"></i></a>
+		</span>
+	<%else current_user.nil? == false %>
+    <%if Fjob.exists?(current_user.id)==false%>
+	    <span data-menuanchor="" class="menu_object" id="user_popup">
+	    	<a href ="/fjob/new"><i class="user icon"></i></a>
+	    </span>
+    <%else%>
+    	<span data-menuanchor="" class="menu_object">
+      	<a href="/fjob/show/<%=current_user.id%>"><i class="user icon"></i></a>
+      </span>
+    <%end%>
+      <span data-menuanchor="" class="menu_object">
+       <a data-method="DELETE" href ="destroy_user_session_path"><i class="lock open icon"></i></a>
+      </span>
+    <%end %>
+				
+</div>
+	
+<!--navbar popup-->
+<div class="ui login mini modal">
+  
+	<i class="close icon"></i>
+   
+	<div class="ui basic segment">
+  	
+		<div class="ui center aligned huge header">로그인</div>
+			<%= render "devise/sessions/new" %>
+		</div>
+	</div>
+
+
+
+<div class="ui container">
+	
+	<h1>검색결과.</h1>
+
+<div id="js-load" class="ui six doubling cards">
+
+
+
+
+<%if @search_data.count() != 0%>
+    <%if @search_data.count() == 0%>
+        검색결과 없음
+    <%else%>
+        <% @search_data.each do |user| %>
+        
+            <%user_r=Review.find(user.id)%>
+            
+            <li class="js-load card" id ="<%=user.id%>">
+            	 
+            	
+    		<div class="image" href = "">
+    		<%searched_user=User.find(user.id)%>
+    		<%if searched_user.profile_img==""%>
+            <img src="../assets/nan.jpg" class="ui Huge centered rounded image" >
+      		<%else%>
+      		
+            <img src="<%=searched_user.profile_img %>" class="ui Huge centered rounded image">
+     	 <%end%>
+    	</div> 
+    		
+                
+                <div class="content">
+                    <div class="header"><a href="/fjob/profile/<%=user.id%>"><%=user.name%></a></div>
+                    <div class="meta">
+                        <a><%= user.category%></a>
+                    </div>
+                    <div class="description">
+                        <%=user.career%>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <span class="right floated">
+                        <%= user.nickname%>
+                    </span>
+                    <span>
+                        <i class="user icon"></i>
+                        
+                    </span>
+                    Review_text : <%=user_r.review_text%> <br>
+                    <%if @c_user == 'no resert'%>
+                    	<%else%>
+		                    <%if user.id != @c_user.id%>
+			                    <form action="/friendship/invite" method "post" >
+			                    <input type="hidden" name="receiver" value="<%=user.id%>" ><!--받는 사람-->
+			                    <input type="hidden" name="requester" value="<%=current_user.id%>">
+			                    <input type= "hidden" name = "bool" value = "false">
+			                    <button type="submit" class="btn btn-primary">친구요청</button>
+			                    </form>
+		                    <%end%>
+                    <%end%>
+                </div>
+
+            </li>
+           
+        <% end %>
+    <% end %>
+<%else%>
+
+    <%if @check_data.count() == 0%>
+        검색결과 없음
+        
+    <%else%>
+        <% @check_data.each do |user| %>
+        <li class="js-load card">
+
+        <div class="image" href = "">
+            <img src="<%user.portfolio_img%>">
+        </div>
+    <div class="content">
+    <div class="header"><%= user.name %></div>
+    <div class="meta">
+    <a><%= user.category%></a>
+    </div>
+    <div class="description">
+    <%=user.career%>
+    </div>
+    </div>
+    <div class="extra content">
+    <span class="right floated">
+    <%= user.nickname%>
+    </span>
+    <span>
+    <i class="user icon"></i>
+    
+     <% @myreview=Review.all%>
+           <%sum=0%>
+		    <%num_count=0%>
+				<%@myreview.each do |x|%>
+					<%if x.subject_id==user.id%>
+							<%sum+=x.ratings%>
+							<%num_count+=1%>
+						<%end%>
+				<%end%>
+					<%if num_count!=0%>
+						<div class="panel-body"><%=sum/num_count%>점</div>
+				    <%else%>
+					    <div class="panel-body">None </div>
+					<%end%>
+    </span>
+    </div>
+    
+    </li>
+    			<if @c_user == 'no resert'>
+                    	<else>
+		                    <%if user.id != current_user.id%>
+			                    <form action="/friendship/invite" method "post" >
+			                    <input type="hidden" name="receiver" value="<%=user.id%>" ><!--받는 사람-->
+			                    <input type="hidden" name="requester" value="<%=current_user.id%>">
+			                    <input type= "hidden" name = "bool" value = "false">
+			                    <button type="submit" class="btn btn-primary">친구요청</button>
+			                    </form>
+			                    <%else%>
+			                    자기자신
+		                    <%end%>
+                    <%end%>
+    <% end %>
+
+<%end%>
+
+
+<!--<div id="js-btn-wrap" class="btn-wrap"> <a href="javascript:;" class="button" id="loadmore_button">LOAD MORE</a> </div>-->
+<!--</div>-->
+
+<!--    <div class="ui large longer modal individual">-->
+    	
+<!--    	<form name="frm" action="" method ="post">-->
+<!--		<input type="hidden" name="div_id_number">-->
+<!--		</form>-->
+    	
+
+<!--  <div class="scrolling content">-->
+<!--    <p>Very long content goes here</p>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+
+
+
+
+
+
+
+<div class="ui top very wide sidebar vertical menu">
+
+
+
+<div class="content">
+			
+			<button class="ui inverted green button" id="greenbutton">greenbutton</button>
+			
+			
+			<div class="section_title">
+				<div class="section1_title">
+					<h1>SEARCH</h1>
+				</div>
+			</div>
+			
+			<div class="section_content">
+				<div class="section1_content">
+					<div class="ui very padded left aligned segment">
+
+						<form class="ui form" action="/fjob/search_result" method="post">
+							
+							<div>
+								<h4 class="ui left aligned header">CATEGORY</h4>
+							</div>
+							<div class="inline field">
+
+											<div class="choose_content checkboxes">
+												<input class="category_checkbox" type="checkbox" name="create" id="create" value="create"><label for="create" class="highlight check_catagory">CREATOR</label>
+
+												<input class="category_checkbox" type="checkbox" name="edit" id="edit" value="edit"><label for="edit" class="highlight check_catagory">EDITOR</label>
+
+												<input class="category_checkbox" type="checkbox" name="write" id="write" value="write"><label for="write" class="highlight check_catagory">WRITER</label>
+
+												<input class="category_checkbox" type="checkbox" name="photo" id="photo" value="photo"><label for="photo" class="highlight check_catagory">PHOTOGRAPHER</label>
+
+												<input class="category_checkbox" type="checkbox" name="design" id="design" value="design"><label for="design" class="highlight check_catagory">DESIGNER</label>
+
+												<input class="category_checkbox" type="checkbox" name="trans" id="trans" value="trans"><label for="trans" class="highlight check_catagory">TRANSLATOR</label>
+
+												<input class="category_checkbox" type="checkbox" name="market" id="market" value="market"><label for="market" class="highlight check_catagory">MARKETER</label>
+
+												<input class="category_checkbox" type="checkbox" name="etc" id="etc" value="etc"><label for="etc" class="highlight check_catagory">ETC</label>
+
+												<input class="category_checkbox" type="checkbox" name="category-check-all" id="category-check-all"><label for="category-check-all" class="highlight check_catagory">ALL</label>
+
+											</div>
+
+
+									</div>
+
+							<div>
+								<h4 class="ui left aligned header">DAY</h4>
+							</div>
+							<div class="inline field">						
+									<div class="choose_content checkboxes">
+
+										<input class="day_checkbox" type="checkbox" name="mon" id="mon" value="mon"><label for="mon" class="highlight check_day">Mon</label>
+
+										<input class="day_checkbox" type="checkbox" name="tue" id="tue" value="tue"><label for="tue" class="highlight check_day">Tue</label>
+
+										<input class="day_checkbox" type="checkbox" name="wed" id="wed" value="wed"><label for="wed" class="highlight check_day">Wen</label>
+
+										<input class="day_checkbox" type="checkbox" name="thu" id="thu" value="thu"><label for="thu" class="highlight check_day">Thu</label>
+
+										<input class="day_checkbox" type="checkbox" name="fri" id="fri" value="fri"><label for="fri" class="highlight check_day">Fri</label>
+
+										<input class="day_checkbox" type="checkbox" name="sat" id="sat" value="sat"><label for="sat" class="highlight check_day">Sat</label>
+
+										<input class="day_checkbox" type="checkbox" name="sun" id="sun" value="sun"><label for="sun" class="highlight check_day">Sun</label>
+
+										<input class="day_checkbox" type="checkbox" name="day-check-all" id="day-check-all"><label for="day-check-all" class="highlight check_catagory">ANY DAY</label>
+
+										</div>
+									</div>
+
+							<div>
+								<h4 class="ui left aligned header">CONTRACT</h4>
+							</div>
+							<div class="inline field">
+
+										<div class="ui transparent input">
+											<input type="number" min="0" max="24" placeholder="12" id = "contract" value="" value="">
+											<label>개월</label>
+										</div>
+
+									</div>
+
+							<div>
+								<h4 class="ui left aligned header">TIME</h4>
+							</div>
+							<div class="inline field">
+
+										<div class="ui transparent input">
+											<input type="number" min="0" max="24" placeholder="12" id = "start_time" >
+											<label>시 부터</label>
+										</div>
+
+										<div class="ui transparent input">
+											<input type="number" min="0" max="24" placeholder="12" id = "end_time">
+											<label>시 까지</label>
+										</div>
+										
+										<div class="ui transparent input">
+											<input type="number" min="0" max="12" placeholder="12" id = "working_time">
+											<label>TOTAL TIME</label>
+										</div>
+
+									</div>
+							
+							<div>
+								<h4 class="ui left aligned header">LOCATION</h4>
+							</div>
+							<div class="inline field">
+
+										<div class="ui transparent input">
+											<input type="text" id="city" placeholder="서울" onchange="checkFilled();" >
+											<label>시</label>
+										</div>
+
+										<div class="ui transparent input">
+											<input type="text" id = "gu" placeholder="노원" >
+											<label>구</label>
+										</div>
+
+									</div>
+
+							<div>
+								<h4 class="ui left aligned header">WORK AT</h4>
+							</div>
+							<div class="inline field">
+
+									<div class="choose_content checkboxes">
+
+										<input class="workat_checkbox" type="checkbox" name="home" id="home" value="home"><label for="home" class="highlight check_day">HOME</label>
+
+										<input class="workat_checkbox" type="checkbox" name="office" id="office" value="office"><label for="office" class="highlight check_day">OFFICE</label>
+
+										<input class="workat_checkbox" type="checkbox" name="workat-check-all" id="workat-check-all"><label for="workat-check-all" class="highlight check_catagory">ANY WHERE</label>
+
+										</div>
+									</div>
+
+							<div class="twenty wide field">
+								<input type="submit" value="FIND">FIND KIM</input>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+			
+			</div>
+</div>
+</div>
+</form>
+</div>
+<script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous">
+  </script>
+<script src="/assets/myjs.js"></script>
+
+<script src="/assets/semantic1.min.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="/assets/semantic1.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/icon.css">
+<link rel="stylesheet" type="text/css" href="/assets/style.css">

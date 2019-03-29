@@ -1,0 +1,59 @@
+   
+<h1>구인 구직 제출파일 수정</h1> <br>
+ 
+<form action="/fjob/update/<%=@edit_fjob.id%>" method "get" >
+        
+    <!--포트폴리오 사진 url -->
+      portfolio_img url:<br>
+    <input type="text" name="fjob_portfolio_img" value = "<%=@edit_fjob.portfolio_img%>"><br>
+    
+     <!--직군-->
+    category:<br>
+    <input type="checkbox" name="fjob_category" value ="creator"> Creator
+    <input type="checkbox" name="fjob_category" value ="editor"> Editor
+    <input type="checkbox" name="fjob_category" value ="designer"> designer
+    <input type="checkbox" name="fjob_category" value ="photograhper"> photograhper
+    <input type="checkbox" name="fjob_category" value ="translator"> translator
+    <input type="checkbox" name="fjob_category" value ="marketer"> marketer
+    <input type="checkbox" name="fjob_category" value ="writer"> writer<br>
+    
+    <!--경력 -->
+    career: <br>
+    <input type="text" name = "fjob_career" value="<%=@edit_fjob.career%>"><br>
+
+   
+   <!--계약기간 -->
+    contract: <br>
+     <input type="number" name ="fjob_contract"  value="<%=@edit_fjob.contract%>">개월<br>
+    
+   
+    <!--근무 시간 -->
+    <!--요일-->
+    date: <br>
+    <input type="checkbox" name="fjob_date" value ="monday"> 월요일
+    <input type="checkbox" name="fjob_date" value ="tuesday"> 화요일
+    <input type="checkbox" name="fjob_date" value ="wednesday"> 수요일
+    <input type="checkbox" name="fjob_date" value ="thursday"> 목요일
+    <input type="checkbox" name="fjob_date" value ="friday"> 금요일
+    <input type="checkbox" name="fjob_date" value ="saturday"> 토요일
+    <input type="checkbox" name="fjob_date" value ="sunday"> 일요일
+    <br>
+     <!--시간-->
+    
+     time: <br>
+    start time:
+      <input type="number" name = "fjob_starttime" value="<%=@edit_fjob.starttime%>" min="0" max="24">
+    end time:
+     <input type="number" name ="fjob_endtime" value="<%=@edit_fjob.endtime%>" min="0" max="24">
+    <br>
+    total time:
+    <input type="number" name ="fjob_timetotal" value="<%=@edit_fjob.timetotal%>" min="0" max="24"> 시간
+    
+    <br>
+     <!--근무환경-->
+      <!--재택근무여부-->
+      home_environment: <br>
+    <input type="checkbox" name="fjob_home_environment[]" value="true" > 재택근무<br>
+    <input type="checkbox" name="fjob_home_environment[]" value="false" >출근<br>
+  <button type="submit" class="btn btn-primary">제출</button>
+</form>
